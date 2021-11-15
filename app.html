@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>vue-code-challenge</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>  
+
+    <div id="app"> 
+        <div class="container">
+            <div class="row">
+                <h4 class="text-center mt-3 text-primary text-uppercase"> {{ message }} </h4>
+                <div class="input-group mb-3" style="width: 20rem;">
+                    <input 
+                        type="text" 
+                        class="form-control rounded-0" 
+                        placeholder="Search for product" 
+                        v-model="search"
+                    >
+                    <span class="btn btn-light bg-white border rounded-0 input-group-text material-icons">search</span>
+                </div>
+                <table class="table mt-5">
+                    <thead class="border-0"> 
+                      <tr> 
+                        <th scope="col" v-for="head in header"> {{ head }} </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="product in searchProduct">
+                        <th>{{ product.code }}</th>
+                        <td class="text-success">{{ product.title }}</td>
+                        <td>{{ product.package }}</td>
+                        <td>{{ product.units }}</td>
+                        <td>{{ product.category }}</td>
+                        <td>{{ product.lastUpdatet }}</td>
+                        <td>{{ product.units }}</td>
+                      </tr>
+                    </tbody>
+                  </table>                             
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+      var app = new Vue({
+        el: '#app',
+        data: {
+          message: 'welcome to vue code challenge',
+          search: '',
+          products: [
+            { code: 'ACC1', title: 'Apple granny smith', package: '40 LB', category: 'Fruits', lastUpdatet: '2021-02-05', units: '3,636,006', editUnits: '3,636,006' },
+            { code: 'ACC2', title: 'Pinapple crownless', package: '7 CT', category: 'Fruits', lastUpdatet: '2021-02-05', units: '6,475,506', editUnits: '6,475,506' },
+            { code: 'ACC3', title: 'Banana green', package: '8 CT', category: 'Fruits', lastUpdatet: '2021-02-05', units: '3,636,006', editUnits: '3,636,006' },
+            { code: 'ACC4', title: 'Banana green tip', package: '40 LB', category: 'Fruits', lastUpdatet: '2021-02-05', units: '3,636,006', editUnits: '3,636,006' },
+            { code: 'ACC5', title: 'Mercedes-Benz', package: 'C 180', category: 'Car', lastUpdatet: '2021-02-05', units: '3,636,006', editUnits: '3,636,006' },
+            { code: 'ACC6', title: 'Audi', package: 'TT', category: 'Car', lastUpdatet: '2021-02-05', units: '3,636,006', editUnits: '3,636,006' },
+          ],
+          header: [ 'Code', 'Product', 'Package', 'Category', 'Last Update', 'Available units', 'Edit units']
+        },
+        computed: {
+            searchProduct () {
+                return this.products.filter(item => {
+                    return item.title.toLowerCase().includes(this.search.toLowerCase()) 
+                           || item.code.toLowerCase().includes(this.search.toLowerCase()) 
+                           || item.category.toLowerCase().includes(this.search.toLowerCase())
+                })
+            }
+        }
+      })         
+    </script>    
+</body>
+</html>
+
